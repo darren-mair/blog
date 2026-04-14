@@ -99,7 +99,7 @@ SortBy         = "default"
 
 [comments]
     enabled  = true
-    provider = "disqus"
+    provider = "utterances"
 
     [comments.disqusjs]
         shortname  = ""
@@ -112,6 +112,7 @@ SortBy         = "default"
         repo      = "https://github.com/darren-mair/blog"
         issueTerm = "pathname"
         label     = "question"
+        theme     = "preferred-color-scheme"
 
     [comments.beaudar]
         repo      = ""

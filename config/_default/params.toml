@@ -29,11 +29,6 @@ favicon        = "img/avatar.png"
     enabled  = true
     provider = "utterances"
 
-    [comments.utterances]
-        repo      = "ENTER REPO HERE"
-        issueTerm = "pathname"
-        # Optional: set to a GitHub issue label, e.g. "blog-comment"
-        label     = ""
 
 # GDPR Cookie Consent Configuration
 # When enabled, analytics and functional cookies require user consent
