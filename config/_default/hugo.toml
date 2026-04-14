@@ -18,3 +18,7 @@ hasCJKLanguage         = false
 
 [services.disqus]
     shortname = "hugo-theme-stack"
+
+[caches]
+    [caches.images]
+        dir = ':cacheDir/images'
