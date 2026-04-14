@@ -1,8 +1,11 @@
 name: Build and deploy
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 on:
   push:
     branches:
       - main
+      - feature/fixActions
   workflow_dispatch:
 permissions:
   contents: read
@@ -95,6 +98,7 @@ jobs:
         with:
           path: ./public
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
