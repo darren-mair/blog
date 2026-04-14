@@ -29,6 +29,11 @@ favicon        = "img/avatar.png"
     enabled  = true
     provider = "utterances"
 
+    [comments.utterances]
+        repo      = "darren-mair/blog"
+        issueTerm = "pathname"
+        label     = "question"
+
 
 # GDPR Cookie Consent Configuration
 # When enabled, analytics and functional cookies require user consent
