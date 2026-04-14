@@ -1,10 +1,24 @@
 # Hugo build output
-public/
-resources/_gen/
+/public/
+/resources/_gen/
+/.hugo_build.lock
 
-# Hugo cache
-.hugo_build.lock
+# Optional Hugo cache directories
+/.hugo_build/
+/.hugo_cache/
 
-# OS files
+# Node and package manager artifacts
+/node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# OS/editor files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
