@@ -1,31 +1,31 @@
 [en]
     languageName = "English"
-    title        = "Hugo Theme Stack"
+    title        = "Darren Mair"
     weight       = 1
 
     [en.params.sidebar]
-        subtitle = "Card-style Hugo theme designed for bloggers"
+        subtitle = ""
 
 [zh]
     languageName = "简体中文"
-    title        = "Hugo 主题 Stack"
+    title        = "Darren Mair"
     weight       = 2
 
     [zh.params.sidebar]
-        subtitle = "为博客设计的卡片式 Hugo 主题"
+        subtitle = ""
 
 [zh-hant-tw]
     languageName = "正體中文"
-    title        = "Hugo 主題 Stack"
+    title        = "Darren Mair"
     weight       = 3
 
     [zh-hant-tw.params.sidebar]
-        subtitle = "為博客設計的卡片式 Hugo 主題"
+        subtitle = ""
 
 [ja]
     languageName = "日本語"
-    title        = "Hugo Theme Stack"
+    title        = "Darren Mair"
     weight       = 4
 
     [ja.params.sidebar]
-        subtitle = "ブログ用のカードスタイルの Hugo テーマ"
+        subtitle = ""
