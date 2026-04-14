@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">GitHub Pages settings placeholder</title>
+  <desc id="desc">Placeholder image for a screenshot of GitHub repository Pages settings set to deploy from Actions.</desc>
+  <rect width="1200" height="630" fill="#172554"/>
+  <rect x="75" y="75" width="1050" height="480" rx="20" fill="#eff6ff"/>
+  <text x="120" y="150" fill="#1d4ed8" font-size="30" font-family="Segoe UI, Arial, sans-serif">Screenshot Placeholder</text>
+  <text x="120" y="245" fill="#0f172a" font-size="54" font-weight="700" font-family="Segoe UI, Arial, sans-serif">GitHub Pages</text>
+  <text x="120" y="315" fill="#334155" font-size="34" font-family="Segoe UI, Arial, sans-serif">Source: GitHub Actions</text>
+  <text x="120" y="405" fill="#475569" font-size="28" font-family="Segoe UI, Arial, sans-serif">Capture the repository Settings → Pages screen after configuring deployment.</text>
+  <text x="120" y="455" fill="#475569" font-size="28" font-family="Segoe UI, Arial, sans-serif">This helps readers confirm they are using Actions, not branch-based publishing.</text>
+</svg>
