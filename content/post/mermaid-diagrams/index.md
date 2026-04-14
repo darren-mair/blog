@@ -2,6 +2,7 @@
 author: Hugo Authors
 title: Mermaid Diagrams
 date: 2025-12-23
+draft: true
 description: A comprehensive guide to creating diagrams with Mermaid in Hugo
 categories:
     - Themes

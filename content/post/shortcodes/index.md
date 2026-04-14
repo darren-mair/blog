@@ -1,6 +1,7 @@
 ---
 title: Shortcodes
 date: 2026-01-26
+draft: true
 description: Sample article showcasing various shortcodes supported by Stack theme.
 categories:
     - Documentation

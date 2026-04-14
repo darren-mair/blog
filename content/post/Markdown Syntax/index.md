@@ -1,6 +1,7 @@
 ---
 title: Markdown Syntax Guide
 date: 2026-01-25
+draft: true
 description: Sample article showcasing basic Markdown syntax and formatting for HTML elements.
 tags:
     - markdown
