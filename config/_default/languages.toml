@@ -5,27 +5,3 @@
 
     [en.params.sidebar]
         subtitle = ""
-
-[zh]
-    languageName = "简体中文"
-    title        = "Darren Mair"
-    weight       = 2
-
-    [zh.params.sidebar]
-        subtitle = ""
-
-[zh-hant-tw]
-    languageName = "正體中文"
-    title        = "Darren Mair"
-    weight       = 3
-
-    [zh-hant-tw.params.sidebar]
-        subtitle = ""
-
-[ja]
-    languageName = "日本語"
-    title        = "Darren Mair"
-    weight       = 4
-
-    [ja.params.sidebar]
-        subtitle = ""
