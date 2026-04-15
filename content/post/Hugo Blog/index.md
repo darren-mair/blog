@@ -1,5 +1,5 @@
 ---
-title: Getting Started with a Hugo Blog on GitHub
+title: Build a Blog with Hugo
 date: 2026-04-14
 description: A practical step-by-step guide to creating a Hugo blog on Windows, publishing it from GitHub, and deploying it with GitHub Actions.
 slug: hugo-on-windows-setup
