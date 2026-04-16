@@ -14,10 +14,13 @@ tags:
     - GitHub Pages
 draft: false
 ---
+## Introduction
 
 I wanted a simple way to publish blog posts for free, keep everything in GitHub, and avoid turning a personal blog into a full-time maintenance project. Hugo ended up being a good fit, but a lot of the setup guides I found were either too generic or too deep into Hugo internals.
 
 So this is the version I wish I had when I started: a practical guide that gets you from zero to a working Hugo blog hosted on GitHub Pages.
+
+## Prerequisites
 
 This guide assumes:
 
@@ -26,8 +29,8 @@ This guide assumes:
 - You want your blog source in GitHub
 - You want a straightforward setup without unnecessary complexity
 - You are happy using a simple theme like Tailwind
+- GitHub Account, create one here https://github.com/
 
-It also includes a GitHub Actions workflow so you can push to `main` and have the site deploy automatically.
 
 <!--more-->
 
@@ -48,19 +51,9 @@ If you want the short version, the overall flow looks like this:
 
 If you want the full step-by-step version, keep going.
 
-## 1. Prerequisites
+## Installation
 
-Before you create the site, install the tools once and verify each one.
-
-### 1.1 Create a GitHub account
-
-If you do not already have one, create an account here:
-
-https://github.com/
-
-You will use GitHub both as the source repository and as the free host for the final site.
-
-### 1.2 Install Git
+### Install Git
 
 Git is required because the theme will be added as a submodule.
 
@@ -76,9 +69,9 @@ Verify:
 git --version
 ```
 
-### 1.3 Install PowerShell 7
+### Install or verify PowerShell 7
 
-PowerShell 7 avoids the old BOM and encoding problems that can trip Hugo up on Windows.
+PowerShell 7 avoids the old BOM and encoding problems that can trip Hugo Extended up on Windows.
 
 Download:
 https://learn.microsoft.com/powershell/
@@ -89,47 +82,73 @@ Verify:
 pwsh --version
 ```
 
-### 1.4 Install Go
-
-For this guide, the most reliable way to install Hugo Extended on Windows is via Go.
-
-Download:
-https://go.dev/dl/
-
-Verify:
+### Install Hugo Extended
+#### Download Hugo
 
 ```powershell
-go version
+Invoke-WebRequest -Uri "https://github.com/gohugoio/hugo/releases/download/v0.160.1/hugo_extended_0.160.1_windows-amd64.zip" -OutFile "hugo_extended.zip"
 ```
 
-## 2. Create the GitHub Repository
+You can change the version number (0.160.1) with the latest release from Hugo’s [Github Releases page](https://github.com/gohugoio/hugo/releases). 
+
+
+#### Extract Hugo
+
+Once the download is complete, run the following command to extract the ZIP file to a directory (e.g., C:\Hugo):
+
+```powershell
+Expand-Archive -Path hugo_extended.zip -DestinationPath C:\Hugo
+```
+
+#### Add Hugo to System Path
+
+To make Hugo accessible from anywhere in PowerShell, you need to add it to the system’s PATH variable.
+
+- Press Windows + X > System > Advanced system settings.   
+- Click `**Environment Variables**`.  
+- Under System Variables, find Path and click Edit.  
+- Click New, then add the path C:\Hugo where you extracted hugo.exe.
+
+Click OK to save the changes.
+
+#### Verify Hugo Installation
+
+Now, open PowerShell and run:
+```powershell
+hugo version
+````
+
+You should see the installed version of Hugo, confirming that it’s set up correctly.
+
+
+### Create the GitHub Repository
 
 To use GitHub Pages with your personal GitHub domain, create a new **public** repository named:
 
-`username.github.io`
+`username.blogname`
 
 Replace `username` with your actual GitHub username.
 
-For example, if your username is `commitconfirmed`, the repository must be:
+For example, if your username is `scoobydoo`, the repository must be:
 
-`commitconfirmed.github.io`
+`scoobydoo.reponame`
 
-![Placeholder showing a GitHub repository named username.github.io](github-repo-setup.svg)
+![showing a GitHub repository setup](github-repo-setup.png)
 
-## 3. Clone the Repository and Prepare the Folder Structure
+### Clone the Repository and Prepare the Folder Structure
 
 Open PowerShell 7 and run:
 
 ```powershell
 cd C:\LocalDevOps
-git clone https://github.com/username/username.github.io.git
-cd username.github.io
+git clone https://github.com/username/reponame.git
+cd reponame`
 mkdir site
 ```
 
 At this point your repository will hold the Hugo site inside a `site` directory, which keeps the root tidy.
 
-### 3.1 Add a .gitignore
+### Add a .gitignore
 
 Create a `.gitignore` file in the repo root with:
 
@@ -142,63 +161,14 @@ Create a `.gitignore` file in the repo root with:
 
 Commit and push this early if you want to confirm your repo and local tooling are working.
 
-## 4. Install Hugo Extended on Windows
 
-This is the part that usually causes the most friction on Windows.
 
-The short version is:
-
-- Do not rely blindly on Winget
-- Do not assume an older `hugo.exe` on your PATH is the correct one
-- Make sure you end up with **Hugo Extended**
-
-### 4.1 Check for an Existing Hugo Install
-
-```powershell
-Get-Command hugo -ErrorAction SilentlyContinue
-```
-
-If a Hugo binary is already present and you want a clean reset:
-
-```powershell
-Remove-Item (Get-Command hugo).Source -Force
-```
-
-### 4.2 Install Hugo Extended via Go
-
-Install Hugo Extended 0.160.1:
-
-```powershell
-go install -tags extended github.com/gohugoio/hugo@v0.160.1
-```
-
-This installs to:
-`%USERPROFILE%\go\bin\hugo.exe`
-
-Check your PATH:
-
-```powershell
-$env:PATH
-```
-
-Then verify Hugo:
-
-```powershell
-hugo version
-```
-
-You need to see `+extended` in the output. Something like:
-
-`hugo v0.160.x+extended windows/amd64`
-
-If `+extended` is missing, stop and fix that first.
-
-## 5. Create the Hugo Site
+## Create your first Hugo site 
 
 Now move into the `site` folder and create the Hugo project there:
 
 ```powershell
-cd C:\LocalDevOps\username.github.io\site
+cd C:\LocalDevOps\repo\site
 hugo new site .
 ```
 
@@ -212,99 +182,28 @@ Hugo will print a local URL, usually:
 
 `http://localhost:1313`
 
-![Placeholder showing a local Hugo server running on localhost](local-hugo-server.svg)
+![Placeholder showing a local Hugo server running on localhost](hugo-sitebuild.png)
 
-## 6. Create a Safe Hugo Config
 
-Because this guide is Windows-focused, I recommend writing the config file in PowerShell 7 with `utf8NoBOM`.
-
-This avoids the BOM issues that sometimes happen when people use older editors or Windows PowerShell 5.1.
-
-```powershell
-@'
-baseURL = "https://username.github.io/"
-title = "My Blog"
-author = "Your Name"
-copyright = "Your Name"
-pagination.pagerSize = 10
-languageCode = "en"
-theme = "tailwind"
-enableRobotsTXT = true
-enableEmoji = true
-
-[markup]
-    _merge = "deep"
-
-[params]
-    keywords = "some, keywords, here"
-    subtitle = "blog subtitle"
-    contentTypeName = "posts"
-    showAuthor = true
-
-    [params.author]
-    name = "Your Name"
-    email = "user@example.com"
-
-    [params.header]
-        logo = "logo.svg"
-        title = "site title"
-
-    [params.footer]
-        since = 2025
-        poweredby = true
-
-        [[params.social_media.items]]
-            enabled = true
-            title = "Bluesky"
-            icon = "brand-bluesky"
-            link = "https://bsky.app/profile/yourname.bsky.social"
-
-        [[params.social_media.items]]
-            enabled = true
-            title = "LinkedIn"
-            icon = "brand-linkedin"
-            link = "https://www.linkedin.com/in/yourname"
-
-        [[params.social_media.items]]
-            enabled = true
-            title = "Github"
-            icon = "brand-github"
-            link = "https://github.com/yourname"
-
-[menu]
-
-    [[menu.main]]
-        identifier = "post"
-        name = "Posts"
-        pageRef = "/posts"
-        weight = 10
-
-    [[menu.main]]
-        identifier = "about"
-        name = "About"
-        pageRef = "/about"
-        weight = 20
-
-[taxonomies]
-category = "categories"
-tag = "tags"
-series = "series"
-'@ | Set-Content -Encoding utf8NoBOM hugo.toml
-```
-
-Replace `username`, `Your Name`, and the social links with your own details.
-
-## 7. Add the Tailwind Theme
+## Add the Tailwind Theme
 
 One of the reasons this setup is nice is that the Tailwind theme keeps things simple. You are not signing up for a heavy frontend toolchain just to publish a few posts.
 
 From inside `site`, run:
 
-```powershell
+```
+git init
 git submodule add https://github.com/tomowang/hugo-theme-tailwind.git themes/tailwind
 ```
 
+### Activate the Theme
+Once the theme is downloaded, open the config.toml file in your Hugo project folder:
+
+Add the following line to the file to set the theme:
+
+theme = "tailwind"
 That should also create a `.gitmodules` file in the repo root.
+
 
 It should look roughly like this:
 
@@ -316,11 +215,8 @@ It should look roughly like this:
 
 At this point, if `hugo server` is already running, Hugo should detect the config and theme changes and rebuild automatically.
 
-## 8. Create the About Page and Your First Post
+## Create the About Page and Your First Post
 
-### 8.1 Create an About page
-
-Create the About page:
 
 ```powershell
 hugo new content about/index.md
@@ -328,7 +224,22 @@ hugo new content about/index.md
 
 Open `site/content/about/index.md` and replace the default content with your own details.
 
-### 8.2 Create a blog post
+```toml
+---
+title: About
+description: Everything you need to know about this site and its author.
+date: 2026-01-26
+lastmod: 2026-01-26
+menu:
+    main: 
+        weight: -90
+        params:
+            icon: user
+---
+````
+
+
+### Create a blog post
 
 Create your first post:
 
@@ -340,21 +251,14 @@ Then use front matter like this:
 
 ```toml
 +++
-title = "Building and hosting your own Hugo blog on GitHub"
-date = "2025-03-12"
-description = "A guide to building and hosting a basic blog using Hugo on your personal GitHub account and GitHub Pages"
-tags = [
-        "hugo",
-        "blog",
-        "github",
-        "github-pages",
-]
-categories = [
-        "hugo",
-]
-series = ["Hugo"]
+date = '2026-04-15T23:13:41+01:00'
 draft = false
+title = 'My First Post'
 +++
+
+## Title Test
+Welcome to my first post on my new Hugo website!
+
 ```
 
 And then add your content below it, for example:
@@ -367,7 +271,7 @@ blog text
 
 Each post should live in its own folder with an `index.md` file. That makes it easy to add images later.
 
-## 9. Run Locally While You Write
+## Run Locally While You Write
 
 From the `site` folder:
 
@@ -386,7 +290,7 @@ What you want to see:
 - Your first post appears on the homepage
 - Hugo rebuilds automatically when you save changes
 
-## 10. Add GitHub Actions Deployment
+## Add GitHub Actions Deployment
 
 Once the blog looks right locally, set GitHub Pages to deploy from Actions.
 
@@ -396,7 +300,7 @@ In your repo:
 2. Open **Pages**
 3. Set the source to **GitHub Actions**
 
-![Placeholder showing GitHub Pages settings configured for GitHub Actions](github-pages-settings.svg)
+![Placeholder showing GitHub Pages settings configured for GitHub Actions](github-actions.png)
 
 Then create `.github/workflows/hugo.yml` in the repository root with this workflow:
 
@@ -524,7 +428,7 @@ git push origin main
 
 Once the workflow completes, your site should be available at:
 
-`https://username.github.io`
+`https://username.github.io/reponame`
 
 ## Verification Checklist
 
@@ -556,7 +460,6 @@ Before sharing or deploying, confirm all of these:
 
 - Editor: VS Code
 - Shell: PowerShell 7
-- Install method: Go (`go install -tags extended ...`)
 - Theme strategy: Git submodules or Hugo modules
 - Hosting: GitHub Pages via GitHub Actions
 
@@ -579,3 +482,5 @@ Hugo is one of those tools that can scale from a tiny personal blog to a much mo
 If all you want is a simple blog that lives in GitHub, deploys for free, and stays easy to manage, this setup is enough to get you there without dragging in a full frontend toolchain.
 
 If you want, I can turn this into a shorter publish-ready version next, or add a matching follow-up post for Docker Compose or GitHub Codespaces.
+
+# Happy Blogging!

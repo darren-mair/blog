@@ -1,7 +1,7 @@
 ---
 title: Markdown Syntax Guide
 date: 2026-01-25
-draft: false
+draft: true
 description: Sample article showcasing basic Markdown syntax and formatting for HTML elements.
 tags:
     - markdown
@@ -10,7 +10,7 @@ tags:
     - themes
 categories:
     - Documentation
-image: banner-sentinelone-deployment.svg
+image: pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg
 ---
 
 This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
