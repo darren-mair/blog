@@ -1,0 +1,238 @@
+<!-- GUIDE NAVIGATION START -->
+{{- if eq .Params.guide "azure-devops" -}}
+{{- $currentWeight := .Weight -}}
+
+{{- $prevSlug := "" -}}
+{{- $nextSlug := "" -}}
+{{- $isMainGuide := false -}}
+
+{{- if or (not .Weight) (eq .Weight 0) -}}
+  {{- $isMainGuide = true -}}
+{{- else if eq .Weight 1 -}}
+  {{- $nextSlug = "2-azure-boards-best-practices" -}}
+{{- else if eq .Weight 2 -}}
+  {{- $prevSlug = "1-operating-model-and-target-state" -}}
+  {{- $nextSlug = "3-repos-branching-and-code-governance" -}}
+{{- else if eq .Weight 3 -}}
+  {{- $prevSlug = "2-azure-boards-best-practices" -}}
+  {{- $nextSlug = "4-pipelines-environments-and-approval-gates" -}}
+{{- else if eq .Weight 4 -}}
+  {{- $prevSlug = "3-repos-branching-and-code-governance" -}}
+  {{- $nextSlug = "5-secure-by-design-permissions-secrets-and-scanning" -}}
+{{- else if eq .Weight 5 -}}
+  {{- $prevSlug = "4-pipelines-environments-and-approval-gates" -}}
+  {{- $nextSlug = "6-implementation-scripts-and-templates" -}}
+{{- else if eq .Weight 6 -}}
+  {{- $prevSlug = "5-secure-by-design-permissions-secrets-and-scanning" -}}
+  {{- $nextSlug = "7-rollout-plan-and-maturity-model" -}}
+{{- else if eq .Weight 7 -}}
+  {{- $prevSlug = "6-implementation-scripts-and-templates" -}}
+{{- end -}}
+
+<nav class="guide-navigation">
+    {{- if $isMainGuide -}}
+    <div class="guide-intro">
+        <div class="guide-intro-text">
+            <span>Ready to implement?</span>
+        </div>
+        <a href="/p/1-operating-model-and-target-state/" class="guide-begin-button">
+            <span>Begin Guide →</span>
+            {{ partial "helper/icon" "chevron-right" }}
+        </a>
+    </div>
+    {{- else -}}
+    <div class="guide-breadcrumb">
+        <a href="{{ ($.GetPage "/post/azure-devops-best-practices").Permalink }}" class="guide-link">
+            {{ partial "helper/icon" "chevron-left" }}
+            <span>Back to Guide</span>
+        </a>
+        <span class="guide-position">Part {{ $currentWeight }} of 7</span>
+    </div>
+
+    <div class="guide-nav-buttons">
+        {{- if $prevSlug }}
+        <a href="/p/{{ $prevSlug }}/" class="guide-nav-button prev-button">
+            {{ partial "helper/icon" "chevron-left" }}
+            <span class="nav-label">
+                <span class="nav-label-small">← Previous</span>
+                <span class="nav-label-main">
+                    {{- if eq $currentWeight 2 }}1) Operating Model and Target State
+                    {{- else if eq $currentWeight 3 }}2) Azure Boards Best Practices
+                    {{- else if eq $currentWeight 4 }}3) Repos, Branching, and Code Governance
+                    {{- else if eq $currentWeight 5 }}4) Pipelines, Environments, and Approval Gates
+                    {{- else if eq $currentWeight 6 }}5) Secure by Design: Permissions, Secrets, and Scanning
+                    {{- else if eq $currentWeight 7 }}6) Implementation Scripts and Templates
+                    {{- end }}
+                </span>
+            </span>
+        </a>
+        {{- else }}
+        <div class="guide-nav-button prev-button disabled">
+            {{ partial "helper/icon" "chevron-left" }}
+            <span class="nav-label">
+                <span class="nav-label-small">← Previous</span>
+                <span class="nav-label-main">(First Page)</span>
+            </span>
+        </div>
+        {{- end }}
+
+        {{- if $nextSlug }}
+        <a href="/p/{{ $nextSlug }}/" class="guide-nav-button next-button">
+            <span class="nav-label">
+                <span class="nav-label-small">Next →</span>
+                <span class="nav-label-main">
+                    {{- if eq $currentWeight 1 }}2) Azure Boards Best Practices
+                    {{- else if eq $currentWeight 2 }}3) Repos, Branching, and Code Governance
+                    {{- else if eq $currentWeight 3 }}4) Pipelines, Environments, and Approval Gates
+                    {{- else if eq $currentWeight 4 }}5) Secure by Design: Permissions, Secrets, and Scanning
+                    {{- else if eq $currentWeight 5 }}6) Implementation Scripts and Templates
+                    {{- else if eq $currentWeight 6 }}7) Rollout Plan and Maturity Model
+                    {{- end }}
+                </span>
+            </span>
+            {{ partial "helper/icon" "chevron-right" }}
+        </a>
+        {{- else }}
+        <div class="guide-nav-button next-button disabled">
+            <span class="nav-label">
+                <span class="nav-label-small">Next →</span>
+                <span class="nav-label-main">(Last Page)</span>
+            </span>
+            {{ partial "helper/icon" "chevron-right" }}
+        </div>
+        {{- end }}
+    </div>
+    {{- end -}}
+</nav>
+
+<style>
+.guide-navigation {
+    margin: 2em 0;
+    padding: 1.5em;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    background: var(--guide-nav-bg, #f9fafb);
+}
+
+.guide-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.guide-intro-text {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+}
+
+.guide-begin-button {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+        padding: 0.8em 1.5em;
+        border: 2px solid var(--link-color);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--link-color);
+        text-decoration: none;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+}
+
+.guide-begin-button:hover {
+        background: var(--link-color);
+        color: #fff;
+}
+
+.guide-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    font-size: 0.9em;
+    color: var(--text-secondary, #6b7280);
+}
+
+.guide-link {
+    color: var(--link-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.guide-link:hover {
+    text-decoration: underline;
+}
+
+.guide-position {
+    font-weight: 500;
+}
+
+.guide-nav-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}
+
+.guide-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    padding: 1em;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--link-color);
+    background: var(--button-bg, #fff);
+    transition: all 0.2s ease;
+}
+
+.guide-nav-button:hover:not(.disabled) {
+    background: var(--button-hover-bg, #f3f4f6);
+    border-color: var(--link-color);
+}
+
+.guide-nav-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: var(--text-secondary, #9ca3af);
+}
+
+.nav-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+}
+
+.nav-label-small {
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.nav-label-main {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.next-button {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+    .guide-nav-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-label-main {
+        display: none;
+    }
+}
+</style>
+{{- end -}}
+<!-- GUIDE NAVIGATION END -->
